@@ -52,6 +52,20 @@ namespace HackathonDinwin.Controllers
             return RedirectToAction($"Buildings", new { UserName = building.UserName });
         }
 
+        [HttpPost]
+        [Route("UpdateUserBuildings")]
+        public IActionResult UpdateUserBuildings(UserBuildings userBuildings)
+        {
+            foreach (var building in userBuildings.Buildings)
+            {
+                var index = GlobalVariables.Buildings.FindIndex(x => x.BuildingName == building.BuildingName);
+                GlobalVariables.Buildings.RemoveAt(index);
+                GlobalVariables.Buildings.Insert(index, building);
+            }
+
+            return RedirectToAction($"Buildings", new { UserName = userBuildings.ActiveUser.Name });
+        }
+
         #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -6,8 +6,10 @@ namespace HackathonDinwin.Models
 {
     public class Building: IValidatableObject
     {
+        [Required]
         public string UserName { get; set; }
 
+        [Required]
         public string BuildingName { get; set; }
 
         public List<Categorie> Categories { get; set; }

@@ -9,6 +9,8 @@ namespace HackathonDinwin.Models
 
         public List<Building> Buildings { get; set; }
 
+        public UserBuildings() { }
+
         public UserBuildings(string username)
         {
             ActiveUser = GlobalVariables.ActiveSession.AllUsers.FirstOrDefault(x => x.Name == username);

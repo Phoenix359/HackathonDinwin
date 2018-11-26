@@ -12,32 +12,74 @@
     <dl class="dl-horizontal"></dl>
 </div>
 
-@for (int i = 0; i < Model.Buildings.Count(); i++)
-{
-    <div>
-        <div>
-            @Html.LabelForModel(Model.Buildings[i].BuildingName) |
-            @Html.ActionLink("Opslaan", "Update", new { name = Model.Buildings[i].BuildingName })
-        </div>
+<form asp-controller="Home" asp-action="UpdateUserBuildings" id="updateForm" method="post">
+    @Html.HiddenFor(m => m.ActiveUser.Name)
 
-        @for (int j = 0; j < Model.Buildings[i].Categories.Count(); j++)
-        {
-            <div>
-                @Html.LabelForModel(Model.Buildings[i].Categories[j].Name)
+    @for (int i = 0; i < Model.Buildings.Count(); i++)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading clickable">
+                <h3 class="panel-title">@Html.LabelForModel(Model.Buildings[i].BuildingName)</h3>
             </div>
-            @for (int k = 0; k < Model.Buildings[i].Categories[j].Rules.Count(); k++)
-            {
-                <div>
-                    @Html.CheckBoxFor(m => m.Buildings[i].Categories[j].Rules[k].Active)
-                    @Html.LabelForModel(Model.Buildings[i].Categories[j].Rules[k].Name)
-                </div>
-            }    
-        }
-    </div>
-}
+            <div class="panel-body">
+                @Html.HiddenFor(m => m.Buildings[i].BuildingName)
+                @Html.HiddenFor(m => m.Buildings[i].UserName)
+
+                @for (int j = 0; j < Model.Buildings[i].Categories.Count(); j++)
+                {
+                    <div>
+                        @Html.LabelForModel(Model.Buildings[i].Categories[j].Name)
+                        @Html.HiddenFor(m => m.Buildings[i].Categories[j].Name)
+                    </div>
+                    @for (int k = 0; k < Model.Buildings[i].Categories[j].Rules.Count(); k++)
+                    {
+                        <div style="margin-left: 25px">
+                            @Html.CheckBoxFor(m => m.Buildings[i].Categories[j].Rules[k].Active, new { onclick = "Save()" })
+                            @Html.LabelForModel(Model.Buildings[i].Categories[j].Rules[k].Name)
+                            @Html.HiddenFor(m => m.Buildings[i].Categories[j].Rules[k].Name)
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+</form>
+
+<br />
 
 <form asp-controller="Home" asp-action="AddBuilding" method="post">
     @Html.Hidden("UserName", Model.ActiveUser)
     @Html.TextBox("BuildingName", "", new { @placeholder = "Naam gebouw" })
     <button type="submit">Toevoegen</button>
 </form>
+
+    @section Scripts {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(document).on('click', '.panel-heading', function (e) {
+                    var $this = $(this);
+                    if (!$this.hasClass('panel-collapsed')) {
+                        $this.parents('.panel').find('.panel-body').slideUp();
+                        $this.addClass('panel-collapsed');
+                    } else {
+                        $this.parents('.panel').find('.panel-body').slideDown();
+                        $this.removeClass('panel-collapsed');
+                    }
+                })
+            });
+
+            var updateForm = $('#updateForm');
+            function Save() {
+                $.ajax({
+                    type: "POST",
+                    url: updateForm.attr('action'),
+                    data: updateForm.serialize(),
+                    success: function (response) {
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+            }
+        </script>
+    }
