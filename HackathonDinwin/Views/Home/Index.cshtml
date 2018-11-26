@@ -5,8 +5,8 @@
 
 <form asp-action="Create" asp-controller="Home">
     <div>
-        <h2>Welcome to BigFoot</h2>
-        <h3>An application to reduce your footprint on the Earth</h3>
+        <h2>Welkom bij Vabi Voetafdruk</h2>
+        <h3>Een applicatie om de wereld te verbeteren...</h3>
 
         @if (Model.ActiveUser.StartCount == 0)
         {
@@ -19,19 +19,7 @@
         {
             <h2>Welkom terug: @Model.ActiveUser.Name voor de @Model.ActiveUser.StartCount e keer.</h2>
             <div>
-                <span>Status: </span>
-                @if (Model.ActiveUser.StartCount < 3)
-                {
-                    <span>Beginner</span>
-                }
-                else if (Model.ActiveUser.StartCount < 6)
-                {
-                    <span>Trouwe gebruiker</span>
-                }
-                else
-                {
-                    <span>Expert</span>
-                }                
+                <span>Status: @Model.ActiveUser.Status</span>
             </div>
             <div>
                 @Html.ActionLink("Gebouwen", "Buildings", new { username = @Model.ActiveUser.Name })
@@ -40,11 +28,11 @@
             <h3>Log uit om een ander een kans te geven.</h3>
             <button type="submit">Uitloggen</button>
         }
-        <h2>Voorgaande wollen sokken figuren:</h2>
+        <h2>Voorgaande 'wollen-sokken-figuren':</h2>
         <ul>
             @foreach (var user in Model.AllUsers)
             {
-                <li>@user.Name - current footprint @user.FootPrint% </li>
+                <li>@user.Name - gebruikt @user.FootPrint aardbollen</li>
             }
         </ul>
     </div>

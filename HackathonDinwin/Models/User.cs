@@ -7,7 +7,7 @@ namespace HackathonDinwin.Models
         public string Name { get; set; }
             = "<anonymous>";
         public int FootPrint { get; set; }
-            = 100;
+            = 10;
 
         public static User Create(string userName)
         {
@@ -31,6 +31,17 @@ namespace HackathonDinwin.Models
         }
 
         public int StartCount { get; set; }
+
+        public string Status
+        {
+            get
+            {
+                if (StartCount < 3) return "Beginner";
+                if (StartCount < 6) return "Gevorderd";
+                if (StartCount < 9) return "Expert";
+                return "Jedi master";
+            }
+        }
 
         public static List<User> GetAll()
         {
