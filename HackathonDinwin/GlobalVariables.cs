@@ -7,5 +7,8 @@ namespace HackathonDinwin
     {
         public static Session ActiveSession { get; set; }
             = new Session();
+
+        public static List<Building> Buildings { get; set; }
+            = new List<Building>();
     }
 }

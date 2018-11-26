@@ -1,0 +1,27 @@
+﻿@model HackathonDinwin.Models.UserBuildings
+
+@{
+    ViewData["Title"] = "Buildings";
+}
+
+<h2>Gebouw overzicht</h2>
+
+<div>
+    <h4>Gebruiker: @Model.ActiveUser.Name</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+
+@foreach (var building in Model.Buildings)
+{
+    <div>
+        @Html.LabelForModel(building.BuildingName) |
+        @Html.ActionLink("Edit", "Edit", new { name = building.BuildingName })
+    </div>
+}
+
+<form asp-controller="Home" asp-action="AddBuilding" method="post">
+    @Html.Hidden("UserName", Model.ActiveUser)
+    @Html.TextBox("BuildingName", "", new { @placeholder = "Naam gebouw" })
+    <button type="submit">Add building</button>
+</form>

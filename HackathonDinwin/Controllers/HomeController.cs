@@ -22,6 +22,38 @@ namespace HackathonDinwin.Controllers
             return RedirectToAction("Index");
         }
 
+        #region buildings
+
+        [HttpGet]
+        [Route("Buildings/{username}")]
+        public IActionResult Buildings(string username)
+        {
+            if (!GlobalVariables.ActiveSession.AllUsers.Any(x => x.Name == username))
+            {
+                RedirectToAction("Index");
+            }
+
+            var model = new UserBuildings(username);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("AddBuilding")]
+        public IActionResult AddBuilding(Building building)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
+
+            GlobalVariables.Buildings.Add(building);
+
+            return RedirectToAction($"Buildings", new { UserName = building.UserName });
+        }
+
+        #endregion
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

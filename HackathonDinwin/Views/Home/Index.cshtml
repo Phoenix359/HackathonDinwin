@@ -31,8 +31,12 @@
                 else
                 {
                     <span>Expert</span>
-                }
+                }                
             </div>
+            <div>
+                @Html.ActionLink("Gebouwen", "Buildings", new { username = @Model.ActiveUser.Name })
+            </div>
+
             <h3>Log uit om een ander een kans te geven.</h3>
             <button type="submit">Uitloggen</button>
         }
