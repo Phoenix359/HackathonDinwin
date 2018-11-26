@@ -52,6 +52,13 @@ namespace HackathonDinwin.Controllers
             return RedirectToAction($"Buildings", new { UserName = building.UserName });
         }
 
+        [HttpGet]
+        [Route("HiScores")]
+        public IActionResult HiScores()
+        {
+            GlobalVariables.ActiveSession.AllUsers.Sort((usr1, usr2) => usr1.FootPrint.CompareTo(usr2.FootPrint));
+            return View("HiScores", GlobalVariables.ActiveSession);
+        }
         [HttpPost]
         [Route("UpdateUserBuildings")]
         public IActionResult UpdateUserBuildings(UserBuildings userBuildings)

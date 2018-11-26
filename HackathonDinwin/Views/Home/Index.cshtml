@@ -13,7 +13,7 @@
             <h2>Hoera een nieuwe gebruiker!</h2>
             <h3>Welkom, login om aan de slag te gaan.</h3>
             <input name="UserName" />
-            <button type="submit" >Inloggen</button>
+            <button type="submit">Inloggen</button>
         }
         else
         {
@@ -24,11 +24,14 @@
             <div>
                 @Html.ActionLink("Gebouwen", "Buildings", new { username = @Model.ActiveUser.Name })
             </div>
+            <div>
+                @Html.ActionLink("Vergelijk", "HiScores")
+            </div>
 
             <h3>Log uit om een ander een kans te geven.</h3>
             <button type="submit">Uitloggen</button>
         }
-        <h2>Voorgaande 'wollen-sokken-figuren':</h2>
+        <h2>Andere gebruikers':</h2>
         <ul>
             @foreach (var user in Model.AllUsers)
             {

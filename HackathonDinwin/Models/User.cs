@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace HackathonDinwin.Models
 {
@@ -6,7 +9,7 @@ namespace HackathonDinwin.Models
     {
         public string Name { get; set; }
             = "<anonymous>";
-        public int FootPrint { get; set; }
+        public double FootPrint { get; set; }
             = 10;
 
         public static User Create(string userName)
@@ -41,6 +44,25 @@ namespace HackathonDinwin.Models
                 if (StartCount < 9) return "Expert";
                 return "Jedi master";
             }
+        }
+
+        static Color GetColorFromRedYellowGreenGradient(double percentage)
+        {
+            var red = (percentage > 50 ? 1 - 2 * (percentage - 50) / 100.0 : 1.0) * 255;
+            var green = (percentage > 50 ? 1.0 : 2 * percentage / 100.0) * 255;
+            var blue = 0.0;
+            Color result = Color.FromArgb((int)red, (int)green, (int)blue);
+            return result;
+        }
+        private static string HexConverter(System.Drawing.Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
+
+        public string ScoreColor()
+        {
+            var max = GlobalVariables.ActiveSession.AllUsers.Max(usr => usr.FootPrint);
+            return HexConverter(GetColorFromRedYellowGreenGradient(100 - FootPrint*10));
         }
 
         public static List<User> GetAll()

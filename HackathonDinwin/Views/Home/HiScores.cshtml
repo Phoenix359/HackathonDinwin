@@ -1,0 +1,17 @@
+﻿
+@model HackathonDinwin.Models.Session
+
+@{
+    ViewData["Title"] = "Resultaten vergelijken";
+}
+<body style="background-color: @Model.ActiveUser.ScoreColor()">
+<h2>Vergelijk uw resultaten:</h2>
+<div>@Model.ActiveUser.Name - gebruikt @Model.ActiveUser.FootPrint aardbollen</div>
+<h2>Wereldranglijst:</h2>
+<ul>
+    @foreach (var user in @Model.AllUsers)
+    {
+        <li style="background-color: @user.ScoreColor()"> @user.Name - gebruikt @user.FootPrint aardbollen</li>
+    }
+</ul>
+</body>
