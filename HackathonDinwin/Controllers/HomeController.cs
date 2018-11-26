@@ -12,7 +12,13 @@ namespace HackathonDinwin.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new Session());
+        }
+
+        public IActionResult Create(string userName)
+        {
+            var user = Models.User.Create(userName);
+            return View("Index", new Session(){ActiveUser = user, AllUsers = Models.User.GetAll()});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
