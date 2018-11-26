@@ -10,6 +10,13 @@ namespace HackathonDinwin.Models
 
         public string BuildingName { get; set; }
 
+        public List<Categorie> Categories { get; set; }
+
+        public Building()
+        {
+            Categories = GlobalVariables.Categories;
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext context)
         {
             if (GlobalVariables.Buildings.Any(x => x.BuildingName == BuildingName))

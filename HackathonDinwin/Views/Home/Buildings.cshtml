@@ -12,16 +12,32 @@
     <dl class="dl-horizontal"></dl>
 </div>
 
-@foreach (var building in Model.Buildings)
+@for (int i = 0; i < Model.Buildings.Count(); i++)
 {
     <div>
-        @Html.LabelForModel(building.BuildingName) |
-        @Html.ActionLink("Edit", "Edit", new { name = building.BuildingName })
+        <div>
+            @Html.LabelForModel(Model.Buildings[i].BuildingName) |
+            @Html.ActionLink("Opslaan", "Update", new { name = Model.Buildings[i].BuildingName })
+        </div>
+
+        @for (int j = 0; j < Model.Buildings[i].Categories.Count(); j++)
+        {
+            <div>
+                @Html.LabelForModel(Model.Buildings[i].Categories[j].Name)
+            </div>
+            @for (int k = 0; k < Model.Buildings[i].Categories[j].Rules.Count(); k++)
+            {
+                <div>
+                    @Html.CheckBoxFor(m => m.Buildings[i].Categories[j].Rules[k].Active)
+                    @Html.LabelForModel(Model.Buildings[i].Categories[j].Rules[k].Name)
+                </div>
+            }    
+        }
     </div>
 }
 
 <form asp-controller="Home" asp-action="AddBuilding" method="post">
     @Html.Hidden("UserName", Model.ActiveUser)
     @Html.TextBox("BuildingName", "", new { @placeholder = "Naam gebouw" })
-    <button type="submit">Add building</button>
+    <button type="submit">Toevoegen</button>
 </form>
