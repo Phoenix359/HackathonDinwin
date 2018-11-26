@@ -48,6 +48,10 @@ namespace HackathonDinwin.Models
 
         static Color GetColorFromRedYellowGreenGradient(double percentage)
         {
+            if (percentage < 0)
+                percentage = 0;
+            if (percentage > 100)
+                percentage = 100;
             var red = (percentage > 50 ? 1 - 2 * (percentage - 50) / 100.0 : 1.0) * 255;
             var green = (percentage > 50 ? 1.0 : 2 * percentage / 100.0) * 255;
             var blue = 0.0;
