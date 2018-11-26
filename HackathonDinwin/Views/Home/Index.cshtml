@@ -8,19 +8,42 @@
         <h2>Welcome to BigFoot</h2>
         <h3>An application to reduce your footprint on the Earth</h3>
 
-        <h3>We welcome you:</h3>
-        <li>@Model.ActiveUser.Name - current footprint @Model.ActiveUser.FootPrint% </li>
-        <h3>Please login to reduce you footprint, and live happier...</h3>
-        <input name="UserName" />
-        <input type="submit" name="Login" />
-        <h2>previous visitors:</h2>
+        @if (Model.ActiveUser.StartCount == 0)
+        {
+            <h2>Hoera een nieuwe gebruiker!</h2>
+            <h3>Welkom, login om aan de slag te gaan.</h3>
+            <input name="UserName" />
+            <button type="submit" >Inloggen</button>
+        }
+        else
+        {
+            <h2>Welkom terug: @Model.ActiveUser.Name voor de @Model.ActiveUser.StartCount e keer.</h2>
+            <div>
+                <span>Status: </span>
+                @if (Model.ActiveUser.StartCount < 3)
+                {
+                    <span>Beginner</span>
+                }
+                else if (Model.ActiveUser.StartCount < 6)
+                {
+                    <span>Trouwe gebruiker</span>
+                }
+                else
+                {
+                    <span>Expert</span>
+                }
+            </div>
+            <h3>Log uit om een ander een kans te geven.</h3>
+            <button type="submit">Uitloggen</button>
+        }
+        <h2>Voorgaande wollen sokken figuren:</h2>
         <ul>
             @foreach (var user in Model.AllUsers)
             {
                 <li>@user.Name - current footprint @user.FootPrint% </li>
             }
         </ul>
-        </div>
+    </div>
 </form>
 @*CAROUSEL*@
 @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

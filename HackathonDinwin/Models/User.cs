@@ -11,14 +11,30 @@ namespace HackathonDinwin.Models
 
         public static User Create(string userName)
         {
-            var user = new User {Name = userName};
-            GlobalVariables.Users.Add(user);
+            User user = GetAll().Find(u => u.Name == userName);
+
+            if (string.IsNullOrEmpty(userName))
+            {
+                user = user = new User();
+            }
+            else if (user == null)
+            {
+                user = new User { Name = userName, StartCount = 1 };
+                GetAll().Add(user);
+            }
+            else
+            {
+                user.StartCount++;
+            }
+
             return user;
         }
 
+        public int StartCount { get; set; }
+
         public static List<User> GetAll()
         {
-            return GlobalVariables.Users;
+            return GlobalVariables.ActiveSession.AllUsers;
         }
     }
 }
